@@ -1,20 +1,22 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ServerResponse, DataRow } from '../../models';
 
-export const fakerApi = createApi({
+export const githubApi = createApi({
   reducerPath: 'faker/api',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://fakerapi.it/api/v1/',
   }),
   endpoints: build => ({
-    searchUsers: build.query<any, string>({
+    searchUsers: build.query<DataRow[], string>({
       query: (search: string) => ({
         url: 'books',
         params: {
           '_quantity': search,
         }
-      })
+      }),
+      transformResponse: (response: ServerResponse) => response.data,
     }),
   }),
 });
 
-export const { useSearchUsersQuery } = fakerApi;
+export const { useSearchUsersQuery } = githubApi;

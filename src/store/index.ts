@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { fakerApi } from './fakerApi/faker.api';
+import { githubApi } from './fakerApi/faker.api';
 
 export const store = configureStore({
   reducer: {
-    [fakerApi.reducerPath]: fakerApi.reducer, 
+    [githubApi.reducerPath]: githubApi.reducer, 
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(fakerApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(githubApi.middleware),
 });
