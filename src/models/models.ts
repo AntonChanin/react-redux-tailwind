@@ -10,9 +10,9 @@ export type DataRow = {
   publisher: string;
 }
 
-export type ServerResponse = {
+export type ServerResponse<T> = {
   status: string;
   code: number;
   total: number;
-  data: DataRow[];
+  data: T[];
 };

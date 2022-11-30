@@ -14,7 +14,7 @@ export const githubApi = createApi({
           '_quantity': search,
         }
       }),
-      transformResponse: (response: ServerResponse) => response.data,
+      transformResponse: (response: ServerResponse<DataRow>) => response.data,
     }),
   }),
 });
