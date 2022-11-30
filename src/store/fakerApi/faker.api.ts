@@ -6,13 +6,16 @@ export const githubApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://fakerapi.it/api/v1/',
   }),
+  refetchOnFocus: true,
   endpoints: build => ({
     searchUsers: build.query<DataRow[], string>({
       query: (search: string) => ({
         url: 'books',
         params: {
-          '_quantity': search,
-        }
+          '_locale': 'ru_RU',
+          '_quantity': 15,
+          '_seed': search,
+        },
       }),
       transformResponse: (response: ServerResponse<DataRow>) => response.data,
     }),
