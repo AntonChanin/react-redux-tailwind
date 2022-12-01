@@ -6,10 +6,11 @@ import { BookModel } from '../models';
 type Props = {
   seed?: string;
   model: BookModel;
+  actions?: string[];
 }
 
 const BookCard: FC<Props> = (props) => {
-  const { seed, model } = props;
+  const { seed, model, actions = ['Add', 'Remove']  } = props;
   const { id, title, author, genre, description, isbn, image, published, publisher } = model;
   
   const { addFavorite, removeFavorite } = useActions();
@@ -41,22 +42,30 @@ const BookCard: FC<Props> = (props) => {
         Author: <span className="font-bold mr-2">{author}</span>
         Genre: <span className="font-bold">{genre}</span>
       </p>
+      <p className="text-sm">
+        Published: <span className="font-bold mr-2">{published}</span>
+        Publisher: <span className="font-bold">{publisher}</span>
+      </p>
       <div className="flex">
         <p className="text-sm font-thin">{description}</p>
         <img className="m-auto w-[150px] h-[200px]" alt="" src={image} />
       </div>
-      {seed && !isFav && <button
-        className="py-2 px-4 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all"
-        onClick={addToFavorite}
-      >
-        Add
-      </button>}
-      {isFav && <button
-        className="py-2 px-4 bg-red-400 rounded hover:shadow-md transition-all"
-        onClick={removeFromFavorite}
-      >
-        Remove
-      </button>}
+      {actions.includes('Add') && !isFav &&
+        <button
+          className="py-2 px-4 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all"
+          onClick={addToFavorite}
+        >
+          Add
+        </button>
+      }
+      {actions.includes('Remove') && isFav &&
+        <button
+          className="py-2 px-4 bg-red-400 rounded hover:shadow-md transition-all"
+          onClick={removeFromFavorite}
+        >
+          Remove
+        </button>
+      }
     </div>
   );
 };

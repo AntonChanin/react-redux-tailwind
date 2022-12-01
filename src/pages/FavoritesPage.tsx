@@ -1,13 +1,15 @@
 import React, { FC, Fragment, useEffect, useState } from 'react';
+
 import BookCard from '../components/BookCard';
+import MessageLog from '../components/MessageLog';
 import useAppSelector from '../hooks/redux';
 import { BookModel } from '../models';
 import { useLazySearchUsersQuery } from '../store/fakerApi/faker.api';
 
 const FavoritesPage: FC = () => {
-  const { favorites } = useAppSelector(state => state.faker);
+  const { favorites } = useAppSelector((state) => state.faker);
   const [featchBook, { data: models, isLoading, isError }] = useLazySearchUsersQuery();
-  const [books, setBooks] = useState<{ fav: string, model?: BookModel }[]>([]);
+  const [books, setBooks] = useState<{ fav: string, seed: string, model?: BookModel }[]>([]);
 
   useEffect(() => {
      const favoritesBook = favorites.map(
@@ -19,20 +21,20 @@ const FavoritesPage: FC = () => {
 
         featchBook(seed);
 
-        return ({ fav, model });
+        return ({ fav, seed, model });
       });
       setBooks(favoritesBook);
-  }, [favorites]);
+  }, [favorites, featchBook, models]);
 
   return (
     <div className="flex justify-center pt-10 mx-auto h-screen w-screen">
-      {isError && <p className="text-center text-red-600">Something went wrong...</p>}
       {favorites.length === 0 ? (
-        <p className="text-center">No items.</p>
+        <MessageLog value="No items." />
       ) : (
-        <ul className="list-none">
-          {!isLoading && books.map(({fav, model }) =>  (
-            <Fragment key={fav}>{ model && <BookCard {...{ model }} />}</Fragment>
+        <ul className="flex flex-col max-w-[615px] list-none">
+          {isError && <p className="text-center text-red-600">Something went wrong...</p>}
+          {!isLoading && books.map(({ fav, seed, model }) =>  (
+            <Fragment key={`${model?.isbn}_${fav}`}>{ model && <BookCard {...{ actions: ['Remove'], seed, model }} />}</Fragment>
           ))}
         </ul>
       )}
