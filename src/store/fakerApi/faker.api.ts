@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ServerResponse, DataRow } from '../../models';
+import { ServerResponse, BookModel } from '../../models';
 
 export const githubApi = createApi({
   reducerPath: 'faker/api',
@@ -8,7 +8,7 @@ export const githubApi = createApi({
   }),
   refetchOnFocus: true,
   endpoints: build => ({
-    searchUsers: build.query<DataRow[], string>({
+    searchUsers: build.query<BookModel[], string>({
       query: (search: string) => ({
         url: 'books',
         params: {
@@ -17,9 +17,9 @@ export const githubApi = createApi({
           '_seed': search,
         },
       }),
-      transformResponse: (response: ServerResponse<DataRow>) => response.data,
+      transformResponse: (response: ServerResponse<BookModel>) => response.data,
     }),
   }),
 });
 
-export const { useSearchUsersQuery } = githubApi;
+export const { useSearchUsersQuery, useLazySearchUsersQuery } = githubApi;

@@ -1,3 +1,3 @@
-import { ServerResponse, DataRow } from './models';
+import { ServerResponse, BookModel } from './models';
 
-export type { ServerResponse, DataRow }; 
+export type { ServerResponse, BookModel }; 

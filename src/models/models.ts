@@ -1,4 +1,4 @@
-export type DataRow = {
+export type BookModel = {
   id: number;
   title: string;
   author: string;
